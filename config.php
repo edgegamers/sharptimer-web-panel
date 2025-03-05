@@ -5,8 +5,16 @@ $user = "";
 $pass = "";
 $db = "";
 $conn = new mysqli($host, $user, $pass, $db);
-if(!$conn){
-    die("connection failed" . mysqli_connect_error());
+
+try {
+    $conn = new mysqli($host, $user, $pass, $db);
+
+    if ($conn->connect_errno) {
+        throw new Exception("Database connection failed: " . $conn->connect_error);
+    }
+} catch (Exception $e) {
+    error_log($e->getMessage()); // Log the real error securely
+    die("Connection failed. Please try again later."); // Show a safe message
 }
 
 // PAGE CONFIG:
