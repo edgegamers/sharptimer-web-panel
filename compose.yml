@@ -10,6 +10,8 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
+    volumes:
+      - /var/www/html/cache
 
   tunnel:
     image: cloudflare/cloudflared:latest

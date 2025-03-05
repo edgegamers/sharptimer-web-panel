@@ -1,5 +1,6 @@
 <?php
 require_once("formatTimestamp.php");
+require_once("steampics.php");
 
 function populatePlayerLeaderboard(mysqli $conn, string $query): void
 {
@@ -27,12 +28,13 @@ function populateLeaderboard(mysqli $conn, string $whereClause): void
 
   $result = $conn->query($sql);
   syslog(LOG_DEBUG, "Query: {$sql}");
-  
+
   $i = 0;
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       $i++;
+      $pfp = getProfileImage($row['SteamID']);
       echo '<a target="_blank" href="https://steamcommunity.com/profiles/' . $row['SteamID'] . '"><div';
       if ($i % 2 == 0) {
         echo ' id="stripped"';
@@ -40,7 +42,7 @@ function populateLeaderboard(mysqli $conn, string $whereClause): void
         echo "";
       }
       echo ' class="row">';
-      echo '<span>' . $i . '</span>';
+      echo '<span style="background-image: url(\'' . $pfp . '\');">' . $i . '</span>';
       echo '<span>' . $row['PlayerName'] . '</span>';
       echo '<span>' . $row['FormattedTime'] . '</span>';
       echo '<span>' . formatTimestamp($row['UnixStamp']) . '</span>';
@@ -51,15 +53,3 @@ function populateLeaderboard(mysqli $conn, string $whereClause): void
     echo "<div id='strangerdanger' class='row'>Player not found.</div>";
   }
 }
-
-// Example usage with a custom WHERE clause:
-// $searchTerm = "John"; // Example search term
-// $customWhere = "`TimesFinished` > 5"; // Example custom WHERE clause
-
-// Assuming $conn is your database connection
-// searchPlayerRecords($conn, $searchTerm, $customWhere);
-
-//Example using POST data:
-//if(isset($_POST['input']) && isset($_POST['where'])){
-//  searchPlayerRecords($conn, $_POST['input'], $_POST['where']);
-//}
