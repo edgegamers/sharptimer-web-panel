@@ -1,0 +1,30 @@
+services:
+  php-apache:
+    build: .
+    restart: always
+    networks:
+      - cf-panel-tunnel
+      - surf_network
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cf-tunnel-webpanel
+    command: tunnel --no-autoupdate run --token ${CF_TOKEN}
+    restart: unless-stopped
+    networks:
+      - cf-panel-tunnel
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+
+networks:
+  cf-panel-tunnel:
+  surf_network:
+    external: true
