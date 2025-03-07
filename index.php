@@ -27,7 +27,7 @@ require_once("populateLeaderboard.php");
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="<?php echo $pagetitle ?>">
-  <meta property="og:description" content="Your statistics in one place!">
+  <meta property="og:description" content="EdgeGamers Surf Server Statistics. Join us @ surf.edgm.rs">
   <meta property="og:url" content="">
   <meta property="og:image" content="https://i.imgur.com/6gHn8TN.png">
   <meta property="og:image:secure_url" content="https://i.imgur.com/6gHn8TN.png">
