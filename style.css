@@ -58,7 +58,10 @@ header {
   flex-flow: column;
   box-sizing: border-box;
   margin-top: 15px;
+}
 
+header a span {
+  display: block ruby;
 }
 
 .header-container {
@@ -126,6 +129,7 @@ a:hover {
   width: 28%;
   box-sizing: border-box;
   padding-top: 5px;
+  margin-right: 10px;
 }
 
 .togglemaps {
@@ -247,9 +251,8 @@ main {
   display: flex;
   flex-flow: column;
   border-radius: var(--borderradius);
-  ;
-  width: 80%;
   transition: 0.2s;
+  width: 95%
 }
 
 .info {
@@ -330,17 +333,17 @@ main {
   margin-right: 10px;
 }
 
-.row span:nth-child(1) {
+.row>span:nth-child(1) {
   font-weight: bolder;
   text-shadow: 2px 2px 2px rgb(0, 0, 0, 0.9);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   padding: inherit;
+  text-align: left;
 }
 
-.row span:nth-child(5),
-.row span:nth-child(1) {
+.row span:nth-child(5) {
   text-align: center;
 }
 

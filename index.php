@@ -62,10 +62,15 @@ require_once("populateLeaderboard.php");
   <header>
     <div class="header-container">
       <div class="logo">
-        <img src="assets/logo.png" alt="logo">
-        <h1>
-          <?php echo $pagetitle ?>
-        </h1>
+        <!-- reload page on click -->
+        <a href="./">
+          <span>
+            <img src="assets/logo.png" alt="logo">
+            <h1>
+              <?php echo $pagetitle ?>
+            </h1>
+          </span>
+        </a>
         <div class="helpme">
           <input id="search" type="search" placeholder="Search by Nickname or SteamID64">
         </div>
@@ -286,7 +291,7 @@ require_once("populateLeaderboard.php");
                 }
               } else {
                 // $sql = "SELECT DISTINCT MapName FROM `PlayerRecords` ORDER BY MapName ASC";
-                $sql = "SELECT MapName FROM `PlayerRecords` GROUP BY MapName ORDER BY AVG(TimesFinished) DESC";
+                $sql = "SELECT MapName FROM `PlayerRecords` WHERE Style = 0 GROUP BY MapName ORDER BY MAX(LastFinished) DESC";
                 $result = $conn->query($sql);
                 function convert_bonus_string($input)
                 {
@@ -351,7 +356,8 @@ require_once("populateLeaderboard.php");
             <?php echo $pagetitle ?>
           </h3>
           <p>
-            <?php echo $footerdesc ?>
+            <!-- <?php echo $footerdesc ?> -->
+             <a href="https://edgegamers.com/">EdgeGamers.com</a> | Beginner Surf  | <a href="steam://connect/surf.edgm.rs">connect surf.edgm.rs</a>
           </p>
         </div>
         <div class="authors">SharpTimer: <a href="https://github.com/DEAFPS/SharpTimer">deafps</a> <br /> Web panel:
@@ -374,7 +380,6 @@ require_once("populateLeaderboard.php");
           dataType: 'text',
           success: function(data) {
             $('.players').html(data);
-            //console.log(data);
           },
           error: function(jqXHR, textStatus, errorThrown) {
             $('.players').html('');
@@ -385,24 +390,26 @@ require_once("populateLeaderboard.php");
       $(document).ready(function() {
         $("#search").keyup(function() {
           var input = $(this).val();
-          //alert(input);
-          if (input != "") {
-            $.ajax({
-              url: 'assets/ajax/livesearch.php',
-              type: 'POST',
-              data: {
-                input: input
-              },
-              dataType: 'text',
-              success: function(data) {
-                $('.players').html(data);
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                $('.players').html('');
-                alert('Error Loading');
-              }
-            });
+          if (input == "") {
+            $('.map-list2').show(500);
+            return;
           }
+          $.ajax({
+            url: 'assets/ajax/livesearch.php',
+            type: 'POST',
+            data: {
+              input: input
+            },
+            dataType: 'text',
+            success: function(data) {
+              $('.map-list2').hide(500);
+              $('.players').html(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              $('.players').html('');
+              alert('Error Loading');
+            }
+          });
         });
       });
     </script>

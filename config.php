@@ -21,7 +21,7 @@ try {
 
 // PAGE CONFIG:
 #Page title:
-$pagetitle = "SharpTimer Web Panel";
+$pagetitle = "=(eGO)= Surf Times";
 
 #Hyperlinks for navigation | If you don't need it you can just delete all the contents or variable.
 $links = '
